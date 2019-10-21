@@ -6,26 +6,39 @@
 <body>
 <script>
 function unchek(id) {
-	if (id=='day') {
-		document.getElementById('night').checked = false;
+	if (id=='v80') {
+		document.getElementById('v100').checked = false;
+		document.getElementById('v120').checked = false;
 	}
-	if (id == 'night'){
-		document.getElementById('day').checked = false;
+	if (id == 'v100'){
+		document.getElementById('v80').checked = false;
+		document.getElementById('v120').checked = false;
+		}
+	if (id == 'v120'){
+		document.getElementById('v100').checked = false;
+		document.getElementById('v80').checked = false;
 	}
 }
 
 function go1(txt) {
-	if (document.getElementById('day').checked) {
-		daynight = document.getElementById('day').value;
-	}else if (document.getElementById('night').checked){
-		daynight = document.getElementById('night').value;
-	} else return false;
-    document.getElementById('my-frame').src='./brainstrok_case/SET2/'+txt+'/'+daynight+'/index.html';
+if (document.getElementById('v80').checked) {
+		vitess = document.getElementById('v80').value;
+	}else if (document.getElementById('v100').checked){
+		vitess = document.getElementById('v100').value;
+	} else if (document.getElementById('v120').checked){
+		vitess = document.getElementById('v120').value;
+	}else return false;
+    document.getElementById('my-frame').src='./brainstrok_case/'+vitess+'/'+txt+'/colorpleth_all_gradien_index.html';
     return false;
 }
 
 function go2(txt) {
 	document.getElementById('my-frame').src='./infectious_case/SET2/'+txt+'/index.html';
+    return false;
+}
+
+function go3(txt) {
+    document.getElementById('my-frame').src='./population_density/'+txt+'/population_colorpleth_all_gradien_index.html';
     return false;
 }
 
@@ -50,8 +63,9 @@ SET2_tab=["1/7/2013-1/20/2013","1/21/2013-2/3/2013","2/4/2013-2/17/2013","2/18/2
 	if(idbutton == 1){
 	
 		let i = 1;
-		let body = document.getElementById('mylist');	
-		body.innerHTML = '<input type="radio" id="day" value="day" onclick="unchek(\'day\')">day<br><input type="radio" id="night" value="night" onclick="unchek(\'night\')">night<br>'
+		let body = document.getElementById('mylist');
+		body.innerHTML="";		
+		body.innerHTML = '<input type="radio" id="v80" value="v80" onclick="unchek(\'v80\')">v80<br><input type="radio" id="v100" value="v100" onclick="unchek(\'v100\')">v100<br><input type="radio" id="v120" value="v120" onclick="unchek(\'v120\')">v120<br>'
 	for (i; i <= 25; i++) {
 			let button = document.createElement("button");
 			button.className="button2";
@@ -63,6 +77,28 @@ SET2_tab=["1/7/2013-1/20/2013","1/21/2013-2/3/2013","2/4/2013-2/17/2013","2/18/2
 			body.appendChild(button);
 			button.addEventListener ("click", function() {
 				go1(this.id);	
+				});
+			button.addEventListener ("mouseover", function() {
+				getmore(this.id,button.innerHTML,1);
+				});
+		}
+	}
+	if(idbutton == 3){
+	
+		let i = 1;
+		let body = document.getElementById('mylist');
+		body.innerHTML="";
+	for (i; i <= 25; i++) {
+			let button = document.createElement("button");
+			button.className="button2";
+			if(i<10)
+				button.id = 'SET2_P0'+i;
+			else
+				button.id = 'SET2_P'+i;
+			button.innerHTML = SET2_tab[i-1];
+			body.appendChild(button);
+			button.addEventListener ("click", function() {
+				go3(this.id);	
 				});
 			button.addEventListener ("mouseover", function() {
 				getmore(this.id,button.innerHTML,1);
@@ -96,8 +132,9 @@ SET2_tab=["1/7/2013-1/20/2013","1/21/2013-2/3/2013","2/4/2013-2/17/2013","2/18/2
 <div>
 <nav>
     <ul>
-	<button onclick="getlist(1)">Brain Stroke</button> 
-	<button onclick="getlist(2)"> Meningitis</button>
+	<button onclick="getlist(1)">Brain Stroke</button>
+	<button onclick="getlist(3)">Users number</button>	
+	<button onclick="getlist(2)">Meningitis</button>
 	</ul>
 	<HR size=2 align='center' width='100%'>
 	<ul id="mylist">
